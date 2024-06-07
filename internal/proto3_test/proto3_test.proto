@@ -1,0 +1,76 @@
+syntax="proto3";
+
+option go_package="github.com/KarKLi/KarKLi/protobuf-golang-codec/internal/proto3_test";
+
+enum TestEnum {
+    ZERO = 0;
+    ONE = 1;
+    TWO = 2;
+}
+
+message Msg {
+    int32 i_1 = 1;
+    int64 i_2 = 2;
+    uint32 u_3 = 3;
+    uint64 u_4 = 4;
+    sint32 s_5 = 5;
+    sint64 s_6 = 6;
+    bool b_7 = 7;
+    TestEnum e_8 = 8;
+    fixed64 f_9 = 9;
+    sfixed64 s_10 = 10;
+    double d_11 = 11;
+    string s_12 = 12;
+    bytes b_13 = 13;
+    Embeeded m_14 = 14;
+    fixed32 f_15 = 15;
+    sfixed32 s_16 = 16;
+    float f_17 = 17;
+}
+
+message RepeatedMsgWithPacked {
+    repeated int32 i_1 = 1;
+    repeated int64 i_2 = 2;
+    repeated uint32 u_3 = 3;
+    repeated uint64 u_4 = 4;
+    repeated sint32 s_5 = 5;
+    repeated sint64 s_6 = 6;
+    repeated bool b_7 = 7;
+    repeated TestEnum e_8 = 8;
+    repeated fixed64 f_9 = 9;
+    repeated sfixed64 s_10 = 10;
+    repeated double d_11 = 11;
+    repeated fixed32 f_12 = 12;
+    repeated sfixed32 s_13 = 13;
+    repeated float f_14 = 14;
+}
+
+message RepeatedMsgWithUnpacked {
+    repeated int32 i_1 = 1[packed=false];
+    repeated int64 i_2 = 2[packed=false];
+    repeated uint32 u_3 = 3[packed=false];
+    repeated uint64 u_4 = 4[packed=false];
+    repeated sint32 s_5 = 5[packed=false];
+    repeated sint64 s_6 = 6[packed=false];
+    repeated bool b_7 = 7[packed=false];
+    repeated TestEnum e_8 = 8[packed=false];
+    repeated fixed64 f_9 = 9[packed=false];
+    repeated sfixed64 s_10 = 10[packed=false];
+    repeated double d_11 = 11[packed=false];
+    repeated fixed32 f_12 = 12[packed=false];
+    repeated sfixed32 s_13 = 13[packed=false];
+    repeated float f_14 = 14[packed=false];
+    repeated string s_15 = 15;
+    repeated bytes b_16 = 16;
+    repeated Embeeded m_17 = 17;
+    map<int32,string> m_18 = 18;
+    map<string,int32> m_19 = 19;
+    map<string,Embeeded> m_20 = 20;
+}
+
+message Embeeded {
+    int32 i_1 = 1;
+    fixed64 f_2 = 2;
+    string s_3 = 3;
+    fixed32 f_4 = 4;
+}
