@@ -59,3 +59,4 @@ func main() {
   return 0
 }
 ```
+For more usage and example, just check the `codec_test.go` for decode, parse and assert.
