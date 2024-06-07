@@ -4,6 +4,7 @@ This library can decode protobuf wire format data without any .proto file, just:
 ```go
 import (
   "github.com/KarKLi/protobuf-golang-codec"
+  "fmt"
 )
 
 func main() {
@@ -31,6 +32,7 @@ And there is a specific method called `ParseMap` which returns a `ProtoMapElem` 
 ```go
 import (
   "github.com/KarKLi/protobuf-golang-codec"
+  "fmt"
 )
 
 func main() {
