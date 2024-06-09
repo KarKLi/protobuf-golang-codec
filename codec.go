@@ -55,8 +55,8 @@ func Decode(b []byte) (ProtoMessage, error) {
 			val, n = protowire.ConsumeFixed64(b)
 			raw = b[:n]
 		case protowire.BytesType:
-			val, n = protowire.ConsumeBytes(b)
-			raw = val.([]byte)
+			raw, n = protowire.ConsumeBytes(b)
+			val = raw
 		default:
 			return nil, fmt.Errorf("not support proto data type %d", typ)
 		}
