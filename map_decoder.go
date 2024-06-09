@@ -218,7 +218,7 @@ var MessageValueDecoder valueDecoder = func(b []byte) ([]byte, ProtoMapValue, er
 	if err != nil {
 		return nil, ProtoMapValue{}, err
 	}
-	msg, err := DecodeBinaryData(v)
+	msg, err := Decode(v)
 	if err != nil {
 		return nil, ProtoMapValue{}, err
 	}

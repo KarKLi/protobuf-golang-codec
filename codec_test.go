@@ -40,12 +40,12 @@ func TestDecodeNonRepeatedData(t *testing.T) {
 	if err != nil {
 		t.Fatalf("can not marshal test proto message, err: %+v", err)
 	}
-	m, err := DecodeBinaryData(bin)
+	m, err := Decode(bin)
 	if err != nil {
 		t.Fatalf("decode test proto message into map failed, err: %+v", err)
 	}
 
-	realI1, err := (m[1]).ParseInt32()
+	realI1, err := (m[1]).DecodeInt32()
 	if err != nil {
 		t.Fatalf("can not parse tag 1, err: %+v", err)
 	}
@@ -53,7 +53,7 @@ func TestDecodeNonRepeatedData(t *testing.T) {
 		t.Fatalf("parse result %d != real val %d", realI1, testMsg.I_1)
 	}
 
-	realI2, err := (m[2]).ParseInt64()
+	realI2, err := (m[2]).DecodeInt64()
 	if err != nil {
 		t.Fatalf("can not parse tag 2, err: %+v", err)
 	}
@@ -61,7 +61,7 @@ func TestDecodeNonRepeatedData(t *testing.T) {
 		t.Fatalf("parse result %d != real val %d", realI1, testMsg.I_1)
 	}
 
-	realU3, err := (m[3]).ParseUint32()
+	realU3, err := (m[3]).DecodeUint32()
 	if err != nil {
 		t.Fatalf("can not parse tag 3, err: %+v", err)
 	}
@@ -69,7 +69,7 @@ func TestDecodeNonRepeatedData(t *testing.T) {
 		t.Fatalf("parse result %d != real val %d", realU3, testMsg.U_3)
 	}
 
-	realU4, err := (m[4]).ParseUint64()
+	realU4, err := (m[4]).DecodeUint64()
 	if err != nil {
 		t.Fatalf("can not parse tag 4, err: %+v", err)
 	}
@@ -77,7 +77,7 @@ func TestDecodeNonRepeatedData(t *testing.T) {
 		t.Fatalf("parse result %d != real val %d", realU4, testMsg.U_4)
 	}
 
-	realS5, err := (m[5]).ParseSint32()
+	realS5, err := (m[5]).DecodeSint32()
 	if err != nil {
 		t.Fatalf("can not parse tag 5, err: %+v", err)
 	}
@@ -85,7 +85,7 @@ func TestDecodeNonRepeatedData(t *testing.T) {
 		t.Fatalf("parse result %d != real val %d", realS5, testMsg.S_5)
 	}
 
-	realS6, err := (m[6]).ParseSint64()
+	realS6, err := (m[6]).DecodeSint64()
 	if err != nil {
 		t.Fatalf("can not parse tag 6, err: %+v", err)
 	}
@@ -93,7 +93,7 @@ func TestDecodeNonRepeatedData(t *testing.T) {
 		t.Fatalf("parse result %d != real val %d", realS6, testMsg.S_6)
 	}
 
-	realB7, err := (m[7]).ParseBool()
+	realB7, err := (m[7]).DecodeBool()
 	if err != nil {
 		t.Fatalf("can not parse tag 7, err: %+v", err)
 	}
@@ -101,7 +101,7 @@ func TestDecodeNonRepeatedData(t *testing.T) {
 		t.Fatalf("parse result %v != real val %v", realB7, testMsg.B_7)
 	}
 
-	realE8, err := (m[8]).ParseEnum()
+	realE8, err := (m[8]).DecodeEnum()
 	if err != nil {
 		t.Fatalf("can not parse tag 8, err: %+v", err)
 	}
@@ -109,7 +109,7 @@ func TestDecodeNonRepeatedData(t *testing.T) {
 		t.Fatalf("parse result %d != real val %d", realE8, testMsg.E_8)
 	}
 
-	realF9, err := (m[9]).ParseFixed64()
+	realF9, err := (m[9]).DecodeFixed64()
 	if err != nil {
 		t.Fatalf("can not parse tag 9, err: %+v", err)
 	}
@@ -117,7 +117,7 @@ func TestDecodeNonRepeatedData(t *testing.T) {
 		t.Fatalf("parse result %d != real val %d", realF9, testMsg.F_9)
 	}
 
-	realF10, err := (m[10]).ParseSfixed64()
+	realF10, err := (m[10]).DecodeSfixed64()
 	if err != nil {
 		t.Fatalf("can not parse tag 10, err: %+v", err)
 	}
@@ -125,7 +125,7 @@ func TestDecodeNonRepeatedData(t *testing.T) {
 		t.Fatalf("parse result %d != real val %d", realF10, testMsg.S_10)
 	}
 
-	realD11, err := (m[11]).ParseDouble()
+	realD11, err := (m[11]).DecodeDouble()
 	if err != nil {
 		t.Fatalf("can not parse tag 11, err: %+v", err)
 	}
@@ -133,7 +133,7 @@ func TestDecodeNonRepeatedData(t *testing.T) {
 		t.Fatalf("parse result %f != real val %f", realD11, testMsg.D_11)
 	}
 
-	realS12, err := (m[12]).ParseString()
+	realS12, err := (m[12]).DecodeString()
 	if err != nil {
 		t.Fatalf("can not parse tag 12, err: %+v", err)
 	}
@@ -141,7 +141,7 @@ func TestDecodeNonRepeatedData(t *testing.T) {
 		t.Fatalf("parse result %s != real val %s", realS12, testMsg.S_12)
 	}
 
-	realB13, err := (m[13]).ParseBytes()
+	realB13, err := (m[13]).DecodeBytes()
 	if err != nil {
 		t.Fatalf("can not parse tag 13, err: %+v", err)
 	}
@@ -149,26 +149,26 @@ func TestDecodeNonRepeatedData(t *testing.T) {
 		t.Fatalf("parse result %v != real val %v", realB13, testMsg.B_13)
 	}
 
-	realM14, err := (m[14]).ParseEmbeddedMsg()
+	realM14, err := (m[14]).DecodeEmbeddedMsg()
 	if err != nil {
 		t.Fatalf("can not parse tag 14, err: %+v", err)
 	}
 	checkEmbeededMsgEqual(t, realM14, testMsg.M_14)
-	realF15, err := (m[15]).ParseFixed32()
+	realF15, err := (m[15]).DecodeFixed32()
 	if err != nil {
 		t.Fatalf("can not parse tag 15, err: %+v", err)
 	}
 	if realF15 != testMsg.F_15 {
 		t.Fatalf("parse result %d != real val %d", realF15, testMsg.F_15)
 	}
-	realS16, err := (m[16]).ParseSfixed32()
+	realS16, err := (m[16]).DecodeSfixed32()
 	if err != nil {
 		t.Fatalf("can not parse tag 16, err: %+v", err)
 	}
 	if realS16 != testMsg.S_16 {
 		t.Fatalf("parse result %d != real val %d", realS16, testMsg.S_16)
 	}
-	realF17, err := (m[17]).ParseFloat()
+	realF17, err := (m[17]).DecodeFloat()
 	if err != nil {
 		t.Fatalf("can not parse tag 17, err: %+v", err)
 	}
@@ -198,61 +198,61 @@ func TestDecodePackedRepeatedData(t *testing.T) {
 	if err != nil {
 		t.Fatalf("can not marshal test proto message, err: %+v", err)
 	}
-	m, err := DecodeBinaryData(bin)
+	m, err := Decode(bin)
 	if err != nil {
 		t.Fatalf("decode test proto message into map failed, err: %+v", err)
 	}
 
-	realI1, err := (m[1]).ParsePackedRepeated(PackedRepeatedInt32Decoder)
+	realI1, err := (m[1]).DecodePackedRepeated(PackedRepeatedInt32Decoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 1, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realI1.([]int32), testMsg.I_1) {
 		t.Fatalf("parse result %v != real val %v", realI1.([]int32), testMsg.I_1)
 	}
-	realI2, err := (m[2]).ParsePackedRepeated(PackedRepeatedInt64Decoder)
+	realI2, err := (m[2]).DecodePackedRepeated(PackedRepeatedInt64Decoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 2, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realI2.([]int64), testMsg.I_2) {
 		t.Fatalf("parse result %v != real val %v", realI2.([]int64), testMsg.I_2)
 	}
-	realU3, err := (m[3]).ParsePackedRepeated(PackedRepeatedUint32Decoder)
+	realU3, err := (m[3]).DecodePackedRepeated(PackedRepeatedUint32Decoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 3, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realU3.([]uint32), testMsg.U_3) {
 		t.Fatalf("parse result %v != real val %v", realU3.([]uint32), testMsg.U_3)
 	}
-	realU4, err := (m[4]).ParsePackedRepeated(PackedRepeatedUint64Decoder)
+	realU4, err := (m[4]).DecodePackedRepeated(PackedRepeatedUint64Decoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 4, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realU4.([]uint64), testMsg.U_4) {
 		t.Fatalf("parse result %v != real val %v", realU4.([]uint64), testMsg.U_4)
 	}
-	realS5, err := (m[5]).ParsePackedRepeated(PackedRepeatedSint32Decoder)
+	realS5, err := (m[5]).DecodePackedRepeated(PackedRepeatedSint32Decoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 5, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realS5.([]int32), testMsg.S_5) {
 		t.Fatalf("parse result %v != real val %v", realS5.([]int32), testMsg.S_5)
 	}
-	realS6, err := (m[6]).ParsePackedRepeated(PackedRepeatedSint64Decoder)
+	realS6, err := (m[6]).DecodePackedRepeated(PackedRepeatedSint64Decoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 6, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realS6.([]int64), testMsg.S_6) {
 		t.Fatalf("parse result %v != real val %v", realS6.([]int64), testMsg.S_6)
 	}
-	realB7, err := (m[7]).ParsePackedRepeated(PackedRepeatedBoolDecoder)
+	realB7, err := (m[7]).DecodePackedRepeated(PackedRepeatedBoolDecoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 7, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realB7.([]bool), testMsg.B_7) {
 		t.Fatalf("parse result %v != real val %v", realB7.([]bool), testMsg.B_7)
 	}
-	realE8, err := (m[8]).ParsePackedRepeated(PackedRepeatedEnumDecoder)
+	realE8, err := (m[8]).DecodePackedRepeated(PackedRepeatedEnumDecoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 8, err: %+v", err)
 	}
@@ -263,42 +263,42 @@ func TestDecodePackedRepeatedData(t *testing.T) {
 	if !reflect.DeepEqual(realE8.([]int32), tempE8) {
 		t.Fatalf("parse result %v != real val %v", realE8.([]int32), tempE8)
 	}
-	realF9, err := (m[9]).ParsePackedRepeated(PackedRepeatedFixed64Decoder)
+	realF9, err := (m[9]).DecodePackedRepeated(PackedRepeatedFixed64Decoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 9, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realF9.([]uint64), testMsg.F_9) {
 		t.Fatalf("parse result %v != real val %v", realF9.([]uint64), testMsg.F_9)
 	}
-	realS10, err := (m[10]).ParsePackedRepeated(PackedRepeatedSfixed64Decoder)
+	realS10, err := (m[10]).DecodePackedRepeated(PackedRepeatedSfixed64Decoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 10, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realS10.([]int64), testMsg.S_10) {
 		t.Fatalf("parse result %v != real val %v", realS10.([]int64), testMsg.S_10)
 	}
-	realD11, err := (m[11]).ParsePackedRepeated(PackedRepeatedDoubleDecoder)
+	realD11, err := (m[11]).DecodePackedRepeated(PackedRepeatedDoubleDecoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 11, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realD11.([]float64), testMsg.D_11) {
 		t.Fatalf("parse result %v != real val %v", realD11.([]float64), testMsg.D_11)
 	}
-	realF12, err := (m[12]).ParsePackedRepeated(PackedRepeatedFixed32Decoder)
+	realF12, err := (m[12]).DecodePackedRepeated(PackedRepeatedFixed32Decoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 12, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realF12.([]uint32), testMsg.F_12) {
 		t.Fatalf("parse result %v != real val %v", realF12.([]uint32), testMsg.F_12)
 	}
-	realS13, err := (m[13]).ParsePackedRepeated(PackedRepeatedSfixed32Decoder)
+	realS13, err := (m[13]).DecodePackedRepeated(PackedRepeatedSfixed32Decoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 13, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realS13.([]int32), testMsg.S_13) {
 		t.Fatalf("parse result %v != real val %v", realS13.([]int32), testMsg.S_13)
 	}
-	realF14, err := (m[14]).ParsePackedRepeated(PackedRepeatedFloatDecoder)
+	realF14, err := (m[14]).DecodePackedRepeated(PackedRepeatedFloatDecoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 14, err: %+v", err)
 	}
@@ -375,61 +375,61 @@ func TestDecodeUnpackedRepeatedData(t *testing.T) {
 	if err != nil {
 		t.Fatalf("can not marshal test proto message, err: %+v", err)
 	}
-	m, err := DecodeBinaryData(bin)
+	m, err := Decode(bin)
 	if err != nil {
 		t.Fatalf("decode test proto message into map failed, err: %+v", err)
 	}
 
-	realI1, err := (m[1]).ParseUnpackedRepeated(UnpackedRepeatedInt32Decoder)
+	realI1, err := (m[1]).DecodeUnpackedRepeated(UnpackedRepeatedInt32Decoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 1, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realI1.([]int32), testMsg.I_1) {
 		t.Fatalf("parse result %v != real val %v", realI1.([]int32), testMsg.I_1)
 	}
-	realI2, err := (m[2]).ParseUnpackedRepeated(UnpackedRepeatedInt64Decoder)
+	realI2, err := (m[2]).DecodeUnpackedRepeated(UnpackedRepeatedInt64Decoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 2, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realI2.([]int64), testMsg.I_2) {
 		t.Fatalf("parse result %v != real val %v", realI2.([]int64), testMsg.I_2)
 	}
-	realU3, err := (m[3]).ParseUnpackedRepeated(UnpackedRepeatedUint32Decoder)
+	realU3, err := (m[3]).DecodeUnpackedRepeated(UnpackedRepeatedUint32Decoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 3, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realU3.([]uint32), testMsg.U_3) {
 		t.Fatalf("parse result %v != real val %v", realU3.([]uint32), testMsg.U_3)
 	}
-	realU4, err := (m[4]).ParseUnpackedRepeated(UnpackedRepeatedUint64Decoder)
+	realU4, err := (m[4]).DecodeUnpackedRepeated(UnpackedRepeatedUint64Decoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 4, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realU4.([]uint64), testMsg.U_4) {
 		t.Fatalf("parse result %v != real val %v", realU4.([]uint64), testMsg.U_4)
 	}
-	realS5, err := (m[5]).ParseUnpackedRepeated(UnpackedRepeatedSint32Decoder)
+	realS5, err := (m[5]).DecodeUnpackedRepeated(UnpackedRepeatedSint32Decoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 5, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realS5.([]int32), testMsg.S_5) {
 		t.Fatalf("parse result %v != real val %v", realS5.([]int32), testMsg.S_5)
 	}
-	realS6, err := (m[6]).ParseUnpackedRepeated(UnpackedRepeatedSint64Decoder)
+	realS6, err := (m[6]).DecodeUnpackedRepeated(UnpackedRepeatedSint64Decoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 6, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realS6.([]int64), testMsg.S_6) {
 		t.Fatalf("parse result %v != real val %v", realS6.([]int64), testMsg.S_6)
 	}
-	realB7, err := (m[7]).ParseUnpackedRepeated(UnpackedRepeatedBoolDecoder)
+	realB7, err := (m[7]).DecodeUnpackedRepeated(UnpackedRepeatedBoolDecoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 7, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realB7.([]bool), testMsg.B_7) {
 		t.Fatalf("parse result %v != real val %v", realB7.([]bool), testMsg.B_7)
 	}
-	realE8, err := (m[8]).ParseUnpackedRepeated(UnpackedRepeatedEnumDecoder)
+	realE8, err := (m[8]).DecodeUnpackedRepeated(UnpackedRepeatedEnumDecoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 8, err: %+v", err)
 	}
@@ -440,56 +440,56 @@ func TestDecodeUnpackedRepeatedData(t *testing.T) {
 	if !reflect.DeepEqual(realE8.([]int32), tempE8) {
 		t.Fatalf("parse result %v != real val %v", realE8.([]int32), tempE8)
 	}
-	realF9, err := (m[9]).ParseUnpackedRepeated(UnpackedRepeatedFixed64Decoder)
+	realF9, err := (m[9]).DecodeUnpackedRepeated(UnpackedRepeatedFixed64Decoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 9, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realF9.([]uint64), testMsg.F_9) {
 		t.Fatalf("parse result %v != real val %v", realF9.([]uint64), testMsg.F_9)
 	}
-	realS10, err := (m[10]).ParseUnpackedRepeated(UnpackedRepeatedSfixed64Decoder)
+	realS10, err := (m[10]).DecodeUnpackedRepeated(UnpackedRepeatedSfixed64Decoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 10, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realS10.([]int64), testMsg.S_10) {
 		t.Fatalf("parse result %v != real val %v", realS10.([]int64), testMsg.S_10)
 	}
-	realD11, err := (m[11]).ParseUnpackedRepeated(UnpackedRepeatedDoubleDecoder)
+	realD11, err := (m[11]).DecodeUnpackedRepeated(UnpackedRepeatedDoubleDecoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 11, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realD11.([]float64), testMsg.D_11) {
 		t.Fatalf("parse result %v != real val %v", realD11.([]float64), testMsg.D_11)
 	}
-	realF12, err := (m[12]).ParseUnpackedRepeated(UnpackedRepeatedFixed32Decoder)
+	realF12, err := (m[12]).DecodeUnpackedRepeated(UnpackedRepeatedFixed32Decoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 12, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realF12.([]uint32), testMsg.F_12) {
 		t.Fatalf("parse result %v != real val %v", realF12.([]uint32), testMsg.F_12)
 	}
-	realS13, err := (m[13]).ParseUnpackedRepeated(UnpackedRepeatedSfixed32Decoder)
+	realS13, err := (m[13]).DecodeUnpackedRepeated(UnpackedRepeatedSfixed32Decoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 13, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realS13.([]int32), testMsg.S_13) {
 		t.Fatalf("parse result %v != real val %v", realS13.([]int32), testMsg.S_13)
 	}
-	realF14, err := (m[14]).ParseUnpackedRepeated(UnpackedRepeatedFloatDecoder)
+	realF14, err := (m[14]).DecodeUnpackedRepeated(UnpackedRepeatedFloatDecoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 14, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realF14.([]float32), testMsg.F_14) {
 		t.Fatalf("parse result %v != real val %v", realF14.([]float32), testMsg.F_14)
 	}
-	realS15, err := (m[15]).ParseUnpackedRepeated(UnpackedRepeatedStringDecoder)
+	realS15, err := (m[15]).DecodeUnpackedRepeated(UnpackedRepeatedStringDecoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 15, err: %+v", err)
 	}
 	if !reflect.DeepEqual(realS15.([]string), testMsg.S_15) {
 		t.Fatalf("parse result %v != real val %v", realS15.([]string), testMsg.S_15)
 	}
-	realB16, err := (m[16]).ParseUnpackedRepeated(UnpackedRepeatedBytesDecoder)
+	realB16, err := (m[16]).DecodeUnpackedRepeated(UnpackedRepeatedBytesDecoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 16, err: %+v", err)
 	}
@@ -502,7 +502,7 @@ func TestDecodeUnpackedRepeatedData(t *testing.T) {
 			t.Fatalf("[idx %d] parse result %v != real val %v", i, realB16.([][]byte), testMsg.B_16)
 		}
 	}
-	realM17, err := (m[17]).ParseUnpackedRepeated(UnpackedRepeatedMessageDecoder)
+	realM17, err := (m[17]).DecodeUnpackedRepeated(UnpackedRepeatedMessageDecoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 17, err: %+v", err)
 	}
@@ -510,7 +510,7 @@ func TestDecodeUnpackedRepeatedData(t *testing.T) {
 	for i, msg := range testMsg.M_17 {
 		checkEmbeededMsgEqual(t, realM17Arr[i], msg)
 	}
-	realM18, err := (m[18]).ParseMap(Int32KeyDecoder, StringValueDecoder)
+	realM18, err := (m[18]).DecodeMap(Int32KeyDecoder, StringValueDecoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 18, err: %+v", err)
 	}
@@ -522,7 +522,7 @@ func TestDecodeUnpackedRepeatedData(t *testing.T) {
 	if !reflect.DeepEqual(realM18Map, testMsg.M_18) {
 		t.Fatalf("parse result %v != real val %v", realM18Map, testMsg.M_18)
 	}
-	realM19, err := (m[19]).ParseMap(StringKeyDecoder, Int32ValueDecoder)
+	realM19, err := (m[19]).DecodeMap(StringKeyDecoder, Int32ValueDecoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 19, err: %+v", err)
 	}
@@ -534,7 +534,7 @@ func TestDecodeUnpackedRepeatedData(t *testing.T) {
 	if !reflect.DeepEqual(realM19Map, testMsg.M_19) {
 		t.Fatalf("parse result %v != real val %v", realM19Map, testMsg.M_19)
 	}
-	realM20, err := (m[20]).ParseMap(StringKeyDecoder, MessageValueDecoder)
+	realM20, err := (m[20]).DecodeMap(StringKeyDecoder, MessageValueDecoder)
 	if err != nil {
 		t.Fatalf("can not parse tag 20, err: %+v", err)
 	}
@@ -552,28 +552,28 @@ func TestDecodeUnpackedRepeatedData(t *testing.T) {
 }
 
 func checkEmbeededMsgEqual(t *testing.T, m1 ProtoMessage, m2 *proto3_test.Embeeded) {
-	realM14I1, err := m1[1].ParseInt32()
+	realM14I1, err := m1[1].DecodeInt32()
 	if err != nil {
 		t.Fatalf("can not parse tag 14_tag 1, err: %+v", err)
 	}
 	if realM14I1 != m2.I_1 {
 		t.Fatalf("parse result %d != real val %d", realM14I1, m2.I_1)
 	}
-	realM14F2, err := m1[2].ParseFixed64()
+	realM14F2, err := m1[2].DecodeFixed64()
 	if err != nil {
 		t.Fatalf("can not parse tag 14_tag 2, err: %+v", err)
 	}
 	if realM14F2 != m2.F_2 {
 		t.Fatalf("parse result %d != real val %d", realM14F2, m2.F_2)
 	}
-	realM14S3, err := m1[3].ParseString()
+	realM14S3, err := m1[3].DecodeString()
 	if err != nil {
 		t.Fatalf("can not parse tag 14_tag 3, err: %+v", err)
 	}
 	if realM14S3 != m2.S_3 {
 		t.Fatalf("parse result %s != real val %s", realM14S3, m2.S_3)
 	}
-	realM14F4, err := m1[4].ParseFixed32()
+	realM14F4, err := m1[4].DecodeFixed32()
 	if err != nil {
 		t.Fatalf("can not parse tag 14_tag 4, err: %+v", err)
 	}

@@ -10,15 +10,15 @@ import (
 func main() {
   var wireData []byte
   // fill data into wireData variable...
-  msg, err := DecodeBinaryData(wireData)
+  msg, err := Decode(wireData)
   if err != nil {
     // err handle
   }
   for tag, v := range msg {
-    // and you can use ParseXXX to decode real data
+    // and you can use DecodeXXX to decode real data
     // for example, tag == 1 is a uint64 data
     if tag == 1 {
-      data, err := v.ParseUint64()
+      data, err := v.DecodeUint64()
       if err != nil {
         // error handle
       }
@@ -28,7 +28,7 @@ func main() {
   return 0
 }
 ```
-And there is a specific method called `ParseMap` which returns a `ProtoMapElem` array, caller can call `FillMapFromProtoMapElem` function to transfer it into `reflect.Value`. After getting this value, caller can just call `reflect.Value`'s method `Interface()` for getting the interface{} (underlying type is the real map type), for example:
+And there is a specific method called `DecodeMap` which returns a `ProtoMapElem` array, caller can call `FillMapFromProtoMapElem` function to transfer it into `reflect.Value`. After getting this value, caller can just call `reflect.Value`'s method `Interface()` for getting the interface{} (underlying type is the real map type), for example:
 ```go
 import (
   "github.com/KarKLi/protobuf-golang-codec"
@@ -38,15 +38,15 @@ import (
 func main() {
   var wireData []byte
   // fill data into wireData variable...
-  msg, err := DecodeBinaryData(wireData)
+  msg, err := Decode(wireData)
   if err != nil {
     // err handle
   }
   for tag, v := range msg {
-    // and you can use ParseXXX to decode real data
+    // and you can use DecodeXXX to decode real data
     // for example, tag == 1's type is map<int32,string>.
     if tag == 1 {
-      mapElems, err := v.ParseMap()
+      mapElems, err := v.DecodeMap()
       if err != nil {
         // error handle
       }

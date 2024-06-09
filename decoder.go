@@ -6,8 +6,8 @@ import (
 	"google.golang.org/protobuf/encoding/protowire"
 )
 
-// ParseInt32 将底层数据尝试解析为int32
-func (p ProtoValue) ParseInt32() (int32, error) {
+// DecodeInt32 将底层数据尝试解析为int32
+func (p ProtoValue) DecodeInt32() (int32, error) {
 	val, err := p.parseVariant()
 	if err != nil {
 		return 0, err
@@ -15,8 +15,8 @@ func (p ProtoValue) ParseInt32() (int32, error) {
 	return int32(val), nil
 }
 
-// ParseInt64 将底层数据尝试解析为int64
-func (p ProtoValue) ParseInt64() (int64, error) {
+// DecodeInt64 将底层数据尝试解析为int64
+func (p ProtoValue) DecodeInt64() (int64, error) {
 	val, err := p.parseVariant()
 	if err != nil {
 		return 0, err
@@ -24,8 +24,8 @@ func (p ProtoValue) ParseInt64() (int64, error) {
 	return int64(val), nil
 }
 
-// ParseUint32 将底层数据尝试解析为uint32
-func (p ProtoValue) ParseUint32() (uint32, error) {
+// DecodeUint32 将底层数据尝试解析为uint32
+func (p ProtoValue) DecodeUint32() (uint32, error) {
 	val, err := p.parseVariant()
 	if err != nil {
 		return 0, err
@@ -33,8 +33,8 @@ func (p ProtoValue) ParseUint32() (uint32, error) {
 	return uint32(val), nil
 }
 
-// ParseUint64 将底层数据尝试解析为uint64
-func (p ProtoValue) ParseUint64() (uint64, error) {
+// DecodeUint64 将底层数据尝试解析为uint64
+func (p ProtoValue) DecodeUint64() (uint64, error) {
 	val, err := p.parseVariant()
 	if err != nil {
 		return 0, err
@@ -42,8 +42,8 @@ func (p ProtoValue) ParseUint64() (uint64, error) {
 	return uint64(val), nil
 }
 
-// ParseSint32 将底层数据尝试解析为sint32（ZigZag解码后）
-func (p ProtoValue) ParseSint32() (int32, error) {
+// DecodeSint32 将底层数据尝试解析为sint32（ZigZag解码后）
+func (p ProtoValue) DecodeSint32() (int32, error) {
 	val, err := p.parseVariant()
 	if err != nil {
 		return 0, err
@@ -51,8 +51,8 @@ func (p ProtoValue) ParseSint32() (int32, error) {
 	return int32(protowire.DecodeZigZag(val)), nil
 }
 
-// ParseSint64 将底层数据尝试解析为sint64（ZigZag解码后）
-func (p ProtoValue) ParseSint64() (int64, error) {
+// DecodeSint64 将底层数据尝试解析为sint64（ZigZag解码后）
+func (p ProtoValue) DecodeSint64() (int64, error) {
 	val, err := p.parseVariant()
 	if err != nil {
 		return 0, err
@@ -60,8 +60,8 @@ func (p ProtoValue) ParseSint64() (int64, error) {
 	return protowire.DecodeZigZag(val), nil
 }
 
-// ParseBool 将底层数据尝试解析为bool
-func (p ProtoValue) ParseBool() (bool, error) {
+// DecodeBool 将底层数据尝试解析为bool
+func (p ProtoValue) DecodeBool() (bool, error) {
 	val, err := p.parseVariant()
 	if err != nil {
 		return false, err
@@ -69,8 +69,8 @@ func (p ProtoValue) ParseBool() (bool, error) {
 	return protowire.DecodeBool(val), nil
 }
 
-// ParseEnum 将底层数据尝试解析为enum（enum底层是int32类型）
-func (p ProtoValue) ParseEnum() (int32, error) {
+// DecodeEnum 将底层数据尝试解析为enum（enum底层是int32类型）
+func (p ProtoValue) DecodeEnum() (int32, error) {
 	val, err := p.parseVariant()
 	if err != nil {
 		return 0, err
@@ -78,8 +78,8 @@ func (p ProtoValue) ParseEnum() (int32, error) {
 	return int32(val), nil
 }
 
-// ParseFixed64 将底层数据尝试解析为fixed64
-func (p ProtoValue) ParseFixed64() (uint64, error) {
+// DecodeFixed64 将底层数据尝试解析为fixed64
+func (p ProtoValue) DecodeFixed64() (uint64, error) {
 	val, err := p.parseI64()
 	if err != nil {
 		return 0, err
@@ -87,8 +87,8 @@ func (p ProtoValue) ParseFixed64() (uint64, error) {
 	return val, nil
 }
 
-// ParseSfixed64 将底层数据尝试解析为sfixed64
-func (p ProtoValue) ParseSfixed64() (int64, error) {
+// DecodeSfixed64 将底层数据尝试解析为sfixed64
+func (p ProtoValue) DecodeSfixed64() (int64, error) {
 	val, err := p.parseI64()
 	if err != nil {
 		return 0, err
@@ -96,8 +96,8 @@ func (p ProtoValue) ParseSfixed64() (int64, error) {
 	return int64(val), nil
 }
 
-// ParseDouble 将底层数据尝试解析为double（对应golang float64类型）
-func (p ProtoValue) ParseDouble() (float64, error) {
+// DecodeDouble 将底层数据尝试解析为double（对应golang float64类型）
+func (p ProtoValue) DecodeDouble() (float64, error) {
 	val, err := p.parseI64()
 	if err != nil {
 		return 0, err
@@ -105,8 +105,8 @@ func (p ProtoValue) ParseDouble() (float64, error) {
 	return math.Float64frombits(val), nil
 }
 
-// ParseString 将底层数据尝试解析为string
-func (p ProtoValue) ParseString() (string, error) {
+// DecodeString 将底层数据尝试解析为string
+func (p ProtoValue) DecodeString() (string, error) {
 	val, err := p.parseLen()
 	if err != nil {
 		return "", err
@@ -114,8 +114,8 @@ func (p ProtoValue) ParseString() (string, error) {
 	return string(val), nil
 }
 
-// ParseBytes 将底层数据尝试解析为[]byte
-func (p ProtoValue) ParseBytes() ([]byte, error) {
+// DecodeBytes 将底层数据尝试解析为[]byte
+func (p ProtoValue) DecodeBytes() ([]byte, error) {
 	val, err := p.parseLen()
 	if err != nil {
 		return nil, err
@@ -123,17 +123,17 @@ func (p ProtoValue) ParseBytes() ([]byte, error) {
 	return val, nil
 }
 
-// ParseEmbeddedMsg 将底层数据尝试解析为嵌套proto message
-func (p ProtoValue) ParseEmbeddedMsg() (ProtoMessage, error) {
+// DecodeEmbeddedMsg 将底层数据尝试解析为嵌套proto message
+func (p ProtoValue) DecodeEmbeddedMsg() (ProtoMessage, error) {
 	val, err := p.parseLen()
 	if err != nil {
 		return nil, err
 	}
-	return DecodeBinaryData(val)
+	return Decode(val)
 }
 
-// ParseMap 将底层数据尝试解析为嵌套proto map类型
-func (p ProtoValue) ParseMap(keyDec keyDecoder, valDec valueDecoder) ([]ProtoMapElem, error) {
+// DecodeMap 将底层数据尝试解析为嵌套proto map类型
+func (p ProtoValue) DecodeMap(keyDec keyDecoder, valDec valueDecoder) ([]ProtoMapElem, error) {
 	msg, err := p.parseUnpackedRepeated()
 	if err != nil {
 		return nil, err
@@ -159,10 +159,10 @@ func (p ProtoValue) ParseMap(keyDec keyDecoder, valDec valueDecoder) ([]ProtoMap
 	return m, nil
 }
 
-// ParsePackedRepeated 将底层数据尝试解析为[packed=true]的repeated字段数据
+// DecodePackedRepeated 将底层数据尝试解析为[packed=true]的repeated字段数据
 //
 // 用于非repeated string, repeated bytes和repeated message
-func (p ProtoValue) ParsePackedRepeated(decoder packedRepeatedDecoder) (interface{}, error) {
+func (p ProtoValue) DecodePackedRepeated(decoder packedRepeatedDecoder) (interface{}, error) {
 	val, err := p.parsePackedRepeated()
 	if err != nil {
 		return nil, err
@@ -171,10 +171,10 @@ func (p ProtoValue) ParsePackedRepeated(decoder packedRepeatedDecoder) (interfac
 	return decoder(val)
 }
 
-// ParseUnpackedRepeated 将底层数据尝试解析为[packed=false]的repeated字段数据
+// DecodeUnpackedRepeated 将底层数据尝试解析为[packed=false]的repeated字段数据
 //
 // 也可用来解析非repeated scalar type（即repeated数字类型）的数据
-func (p ProtoValue) ParseUnpackedRepeated(decoder unpackedRepeatedDecoder) (interface{}, error) {
+func (p ProtoValue) DecodeUnpackedRepeated(decoder unpackedRepeatedDecoder) (interface{}, error) {
 	val, err := p.parseUnpackedRepeated()
 	if err != nil {
 		return nil, err
@@ -183,8 +183,8 @@ func (p ProtoValue) ParseUnpackedRepeated(decoder unpackedRepeatedDecoder) (inte
 	return decoder(val)
 }
 
-// ParseFixed32 将底层数据尝试解析为fixed32字段数据
-func (p ProtoValue) ParseFixed32() (uint32, error) {
+// DecodeFixed32 将底层数据尝试解析为fixed32字段数据
+func (p ProtoValue) DecodeFixed32() (uint32, error) {
 	val, err := p.parseI32()
 	if err != nil {
 		return 0, err
@@ -192,8 +192,8 @@ func (p ProtoValue) ParseFixed32() (uint32, error) {
 	return val, nil
 }
 
-// ParseSfixed32 将底层数据尝试解析为sfixed32字段数据
-func (p ProtoValue) ParseSfixed32() (int32, error) {
+// DecodeSfixed32 将底层数据尝试解析为sfixed32字段数据
+func (p ProtoValue) DecodeSfixed32() (int32, error) {
 	val, err := p.parseI32()
 	if err != nil {
 		return 0, err
@@ -201,8 +201,8 @@ func (p ProtoValue) ParseSfixed32() (int32, error) {
 	return int32(val), nil
 }
 
-// ParseFloat 将底层数据尝试解析为float字段数据
-func (p ProtoValue) ParseFloat() (float32, error) {
+// DecodeFloat 将底层数据尝试解析为float字段数据
+func (p ProtoValue) DecodeFloat() (float32, error) {
 	val, err := p.parseI32()
 	if err != nil {
 		return 0, err

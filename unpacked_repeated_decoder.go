@@ -173,7 +173,7 @@ var UnpackedRepeatedMessageDecoder unpackedRepeatedDecoder = func(b [][]byte) (i
 			result = append(result, make(ProtoMessage))
 			continue
 		}
-		msg, err := DecodeBinaryData(b[i])
+		msg, err := Decode(b[i])
 		if err != nil {
 			return nil, err
 		}

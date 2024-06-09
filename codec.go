@@ -32,8 +32,8 @@ type ProtoValue struct {
 
 type ProtoMessage map[protowire.Number]ProtoValue
 
-/* DecodeBinaryData 解析proto二进制流数据*/
-func DecodeBinaryData(b []byte) (ProtoMessage, error) {
+/* Decode 解析proto二进制流数据*/
+func Decode(b []byte) (ProtoMessage, error) {
 	m := make(map[protowire.Number]ProtoValue)
 	for len(b) > 0 {
 		var n int
