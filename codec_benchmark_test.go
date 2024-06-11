@@ -218,7 +218,7 @@ func BenchmarkDecodePackedRepeatedData(b *testing.B) {
 	initTestData(b)
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
-		m, err := Decode(testPackedRepeatedBin, NotSort)
+		m, err := Decode(testPackedRepeatedBin, Asc)
 		if err != nil {
 			b.Fatalf("decode RepeatedMsgWithPacked proto message into ProtoMessage struct failed, err: %+v", err)
 		}
@@ -246,7 +246,7 @@ func BenchmarkDecodeUnpackedRepeatedData(b *testing.B) {
 	initTestData(b)
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
-		m, err := Decode(testUnpackedRepeatedBin, NotSort)
+		m, err := Decode(testUnpackedRepeatedBin, Asc)
 		if err != nil {
 			b.Fatalf("decode RepeatedMsgWithPacked proto message into ProtoMessage struct failed, err: %+v", err)
 		}

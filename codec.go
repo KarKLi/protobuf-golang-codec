@@ -48,13 +48,10 @@ func (p *ProtoMessage) GetRepeatedData(tag protowire.Number) ([]int, error) {
 			return nil, nil
 		}
 		var i int
-		for i := idx; i < len(p.Values); i++ {
+		for i = idx; i < len(p.Values); i++ {
 			if p.Values[i].tag != tag {
 				break
 			}
-		}
-		if len(p.Values[idx:i]) == 1 {
-			return nil, ErrDataNotRepeatedData
 		}
 		for j := idx; j < i; j++ {
 			idxs = append(idxs, j)
