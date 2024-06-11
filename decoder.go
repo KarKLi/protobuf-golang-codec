@@ -134,20 +134,22 @@ func (p ProtoValue) DecodeEmbeddedMsg(sortType MessageSortType) (ProtoMessage, e
 
 // DecodeMap 将底层数据尝试解析为嵌套proto map类型
 func (p ProtoMessage) DecodeMap(tag protowire.Number, keyDec keyDecoder, valDec valueDecoder) ([]ProtoMapElem, error) {
-	vals, err := p.GetRepeatedData(tag)
+	idxs, err := p.GetRepeatedData(tag)
 	if err != nil {
 		return nil, err
 	}
-	m := make([]ProtoMapElem, 0, len(vals))
-	for i := 0; i < len(vals); i++ {
+	m := make([]ProtoMapElem, 0, len(idxs))
+	for i := 0; i < len(idxs); i++ {
 		var key ProtoMapKey
 		var value ProtoMapValue
 		var err error
-		vals[i].val, key, err = keyDec(vals[i].val.([]byte))
+
+		payload := p.Values[idxs[i]].val.([]byte)
+		payload, key, err = keyDec(payload)
 		if err != nil {
 			return nil, err
 		}
-		vals[i].val, value, err = valDec(vals[i].val.([]byte))
+		_, value, err = valDec(payload)
 		if err != nil {
 			return nil, err
 		}
@@ -163,27 +165,27 @@ func (p ProtoMessage) DecodeMap(tag protowire.Number, keyDec keyDecoder, valDec 
 //
 // 用于非repeated string, repeated bytes和repeated message
 func (p ProtoMessage) DecodePackedRepeated(tag protowire.Number, decoder packedRepeatedDecoder) (interface{}, error) {
-	vals, err := p.GetRepeatedData(tag)
+	idxs, err := p.GetRepeatedData(tag)
 	if err != nil {
 		return nil, err
 	}
-	if len(vals) == 0 {
+	if len(idxs) == 0 {
 		return decoder(ProtoValue{})
 	}
 	// 数据是variant类型数据的集合，通过传入的decoder进行解码
-	return decoder(vals[0])
+	return decoder(p.Values[idxs[0]])
 }
 
 // DecodeUnpackedRepeated 将底层数据尝试解析为[packed=false]的repeated字段数据
 //
 // 也可用来解析非repeated scalar type（即repeated数字类型）的数据
 func (p ProtoMessage) DecodeUnpackedRepeated(tag protowire.Number, decoder unpackedRepeatedDecoder) (interface{}, error) {
-	vals, err := p.GetRepeatedData(tag)
+	idxs, err := p.GetRepeatedData(tag)
 	if err != nil {
 		return nil, err
 	}
 	// 数据是variant类型数据的集合，通过传入的decoder进行解码
-	return decoder(vals)
+	return decoder(p, idxs)
 }
 
 // DecodeFixed32 将底层数据尝试解析为fixed32字段数据

@@ -223,8 +223,8 @@ func BenchmarkDecodePackedRepeatedData(b *testing.B) {
 			b.Fatalf("decode RepeatedMsgWithPacked proto message into ProtoMessage struct failed, err: %+v", err)
 		}
 		// 对所有repeated字段继续解码
-		for i := range m.values {
-			tag := m.values[i].tag
+		for i := range m.Values {
+			tag := m.Values[i].tag
 			_, err := m.DecodePackedRepeated(tag, testPackedRepeatedDecoderMap[tag])
 			if err != nil {
 				b.Fatalf("decode RepeatedMsgWithPacked %d field failed, err: %+v", tag, err)
@@ -251,8 +251,8 @@ func BenchmarkDecodeUnpackedRepeatedData(b *testing.B) {
 			b.Fatalf("decode RepeatedMsgWithPacked proto message into ProtoMessage struct failed, err: %+v", err)
 		}
 		// 对所有repeated字段继续解码
-		for i := range m.values {
-			tag := m.values[i].tag
+		for i := range m.Values {
+			tag := m.Values[i].tag
 			if tag == 18 || tag == 19 || tag == 20 {
 				elems, err := m.DecodeMap(tag, testMapDecoderMap[tag].k, testMapDecoderMap[tag].v)
 				if err != nil {

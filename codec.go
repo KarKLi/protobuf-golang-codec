@@ -32,56 +32,60 @@ type ProtoValue struct {
 }
 
 type ProtoMessage struct {
-	values   []ProtoValue
+	Values   []ProtoValue
 	sortType MessageSortType
 }
 
-func (p *ProtoMessage) GetRepeatedData(tag protowire.Number) ([]ProtoValue, error) {
+// GetRepeatedData 返回ProtoMessage中所有满足传入tag的底层数据索引
+func (p *ProtoMessage) GetRepeatedData(tag protowire.Number) ([]int, error) {
+	idxs := make([]int, 0, len(p.Values))
 	if p.sortType != NotSort {
 		// 二分法寻找
-		idx := sort.Search(len(p.values), func(i int) bool {
-			return int32(p.values[i].tag) >= int32(tag)
+		idx := sort.Search(len(p.Values), func(i int) bool {
+			return int32(p.Values[i].tag) >= int32(tag)
 		})
 		if idx == -1 {
 			return nil, nil
 		}
 		var i int
-		for i := idx; i < len(p.values); i++ {
-			if p.values[i].tag != tag {
+		for i := idx; i < len(p.Values); i++ {
+			if p.Values[i].tag != tag {
 				break
 			}
 		}
-		if len(p.values[idx:i]) == 1 {
+		if len(p.Values[idx:i]) == 1 {
 			return nil, ErrDataNotRepeatedData
 		}
-		return p.values[idx:i], nil
+		for j := idx; j < i; j++ {
+			idxs = append(idxs, j)
+		}
+		return idxs, nil
 	}
-	vals := make([]ProtoValue, 0)
-	for i := 0; i < len(p.values); i++ {
-		if p.values[i].tag == tag {
-			vals = append(vals, p.values[i])
+	for i := 0; i < len(p.Values); i++ {
+		if p.Values[i].tag == tag {
+			idxs = append(idxs, i)
 		}
 	}
-	return vals, nil
+	return idxs, nil
 }
 
 func (p *ProtoMessage) GetData(tag protowire.Number) (ProtoValue, error) {
 	if p.sortType != NotSort {
 		// 二分法寻找
-		idx := sort.Search(len(p.values), func(i int) bool {
-			return int32(p.values[i].tag) >= int32(tag)
+		idx := sort.Search(len(p.Values), func(i int) bool {
+			return int32(p.Values[i].tag) >= int32(tag)
 		})
 		if idx == -1 {
 			return ProtoValue{}, nil
 		}
-		if idx+1 < len(p.values) && p.values[idx+1].tag == tag {
+		if idx+1 < len(p.Values) && p.Values[idx+1].tag == tag {
 			return ProtoValue{}, ErrDataNotSingularData
 		}
 	}
 	// 退化为顺序查找
-	for i := 0; i < len(p.values); i++ {
-		if p.values[i].tag == tag {
-			return p.values[i], nil
+	for i := 0; i < len(p.Values); i++ {
+		if p.Values[i].tag == tag {
+			return p.Values[i], nil
 		}
 	}
 	return ProtoValue{}, nil
@@ -101,7 +105,7 @@ const (
 // Decode 解析proto二进制流数据
 func Decode(b []byte, sortType MessageSortType) (ProtoMessage, error) {
 	m := ProtoMessage{
-		values:   make([]ProtoValue, 0, 16),
+		Values:   make([]ProtoValue, 0, 16),
 		sortType: sortType,
 	}
 	for len(b) > 0 {
@@ -127,18 +131,18 @@ func Decode(b []byte, sortType MessageSortType) (ProtoMessage, error) {
 		if n < 0 {
 			return ProtoMessage{}, protowire.ParseError(n)
 		}
-		m.values = append(m.values, ProtoValue{_type: typ, val: val, tag: num})
+		m.Values = append(m.Values, ProtoValue{_type: typ, val: val, tag: num})
 		b = b[n:]
 	}
 	switch sortType {
 	case NotSort:
 	case Asc:
-		sort.Slice(m.values, func(i, j int) bool {
-			return m.values[i].tag < m.values[j].tag
+		sort.Slice(m.Values, func(i, j int) bool {
+			return m.Values[i].tag < m.Values[j].tag
 		})
 	case Desc:
-		sort.Slice(m.values, func(i, j int) bool {
-			return m.values[i].tag > m.values[j].tag
+		sort.Slice(m.Values, func(i, j int) bool {
+			return m.Values[i].tag > m.Values[j].tag
 		})
 	}
 	return m, nil
