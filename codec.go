@@ -32,11 +32,11 @@ type ProtoValue struct {
 }
 
 type ProtoMessage struct {
-	values   []*ProtoValue
+	values   []ProtoValue
 	sortType MessageSortType
 }
 
-func (p *ProtoMessage) GetRepeatedData(tag protowire.Number) ([]*ProtoValue, error) {
+func (p *ProtoMessage) GetRepeatedData(tag protowire.Number) ([]ProtoValue, error) {
 	if p.sortType != NotSort {
 		// 二分法寻找
 		idx := sort.Search(len(p.values), func(i int) bool {
@@ -56,7 +56,7 @@ func (p *ProtoMessage) GetRepeatedData(tag protowire.Number) ([]*ProtoValue, err
 		}
 		return p.values[idx:i], nil
 	}
-	vals := make([]*ProtoValue, 0)
+	vals := make([]ProtoValue, 0)
 	for i := 0; i < len(p.values); i++ {
 		if p.values[i].tag == tag {
 			vals = append(vals, p.values[i])
@@ -65,17 +65,17 @@ func (p *ProtoMessage) GetRepeatedData(tag protowire.Number) ([]*ProtoValue, err
 	return vals, nil
 }
 
-func (p *ProtoMessage) GetData(tag protowire.Number) (*ProtoValue, error) {
+func (p *ProtoMessage) GetData(tag protowire.Number) (ProtoValue, error) {
 	if p.sortType != NotSort {
 		// 二分法寻找
 		idx := sort.Search(len(p.values), func(i int) bool {
 			return int32(p.values[i].tag) >= int32(tag)
 		})
 		if idx == -1 {
-			return &ProtoValue{}, nil
+			return ProtoValue{}, nil
 		}
 		if idx+1 < len(p.values) && p.values[idx+1].tag == tag {
-			return nil, ErrDataNotSingularData
+			return ProtoValue{}, ErrDataNotSingularData
 		}
 	}
 	// 退化为顺序查找
@@ -84,7 +84,7 @@ func (p *ProtoMessage) GetData(tag protowire.Number) (*ProtoValue, error) {
 			return p.values[i], nil
 		}
 	}
-	return &ProtoValue{}, nil
+	return ProtoValue{}, nil
 }
 
 type MessageSortType int
@@ -99,16 +99,16 @@ const (
 )
 
 // Decode 解析proto二进制流数据
-func Decode(b []byte, sortType MessageSortType) (*ProtoMessage, error) {
-	m := &ProtoMessage{
-		values:   make([]*ProtoValue, 0, 16),
+func Decode(b []byte, sortType MessageSortType) (ProtoMessage, error) {
+	m := ProtoMessage{
+		values:   make([]ProtoValue, 0, 16),
 		sortType: sortType,
 	}
 	for len(b) > 0 {
 		var n int
 		num, typ, n := protowire.ConsumeTag(b)
 		if n < 0 {
-			return nil, protowire.ParseError(n)
+			return ProtoMessage{}, protowire.ParseError(n)
 		}
 		b = b[n:]
 		var val interface{}
@@ -122,12 +122,12 @@ func Decode(b []byte, sortType MessageSortType) (*ProtoMessage, error) {
 		case protowire.BytesType:
 			val, n = protowire.ConsumeBytes(b)
 		default:
-			return nil, fmt.Errorf("not support proto data type %d", typ)
+			return ProtoMessage{}, fmt.Errorf("not support proto data type %d", typ)
 		}
 		if n < 0 {
-			return nil, protowire.ParseError(n)
+			return ProtoMessage{}, protowire.ParseError(n)
 		}
-		m.values = append(m.values, &ProtoValue{_type: typ, val: val, tag: num})
+		m.values = append(m.values, ProtoValue{_type: typ, val: val, tag: num})
 		b = b[n:]
 	}
 	switch sortType {

@@ -124,10 +124,10 @@ func (p ProtoValue) DecodeBytes() ([]byte, error) {
 }
 
 // DecodeEmbeddedMsg 将底层数据尝试解析为嵌套proto message
-func (p ProtoValue) DecodeEmbeddedMsg(sortType MessageSortType) (*ProtoMessage, error) {
+func (p ProtoValue) DecodeEmbeddedMsg(sortType MessageSortType) (ProtoMessage, error) {
 	val, err := p.parseLen()
 	if err != nil {
-		return nil, err
+		return ProtoMessage{}, err
 	}
 	return Decode(val, sortType)
 }
@@ -168,7 +168,7 @@ func (p ProtoMessage) DecodePackedRepeated(tag protowire.Number, decoder packedR
 		return nil, err
 	}
 	if len(vals) == 0 {
-		return decoder(nil)
+		return decoder(ProtoValue{})
 	}
 	// 数据是variant类型数据的集合，通过传入的decoder进行解码
 	return decoder(vals[0])

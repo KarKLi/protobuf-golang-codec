@@ -6,16 +6,14 @@ import (
 	"google.golang.org/protobuf/encoding/protowire"
 )
 
-type packedRepeatedDecoder func(*ProtoValue) (interface{}, error)
+type packedRepeatedDecoder func(ProtoValue) (interface{}, error)
 
 // 标记为packed的packedRepeatedDecoder，仅适用于wire_type为VARINT的数字类型
 
 // PackedRepeatedInt32Decoder 解码repeated int32
-var PackedRepeatedInt32Decoder packedRepeatedDecoder = func(p *ProtoValue) (interface{}, error) {
+var PackedRepeatedInt32Decoder packedRepeatedDecoder = func(p ProtoValue) (interface{}, error) {
 	result := []int32{}
-	if p == nil {
-		return result, nil
-	}
+
 	payload := p.val.([]byte)
 	for len(payload) > 0 {
 		val, n := protowire.ConsumeVarint(payload)
@@ -29,11 +27,9 @@ var PackedRepeatedInt32Decoder packedRepeatedDecoder = func(p *ProtoValue) (inte
 }
 
 // PackedRepeatedInt64Decoder 解码repeated int64
-var PackedRepeatedInt64Decoder packedRepeatedDecoder = func(p *ProtoValue) (interface{}, error) {
+var PackedRepeatedInt64Decoder packedRepeatedDecoder = func(p ProtoValue) (interface{}, error) {
 	result := []int64{}
-	if p == nil {
-		return result, nil
-	}
+
 	payload := p.val.([]byte)
 	for len(payload) > 0 {
 		val, n := protowire.ConsumeVarint(payload)
@@ -47,11 +43,9 @@ var PackedRepeatedInt64Decoder packedRepeatedDecoder = func(p *ProtoValue) (inte
 }
 
 // PackedRepeatedUint32Decoder 解码repeated uint32
-var PackedRepeatedUint32Decoder packedRepeatedDecoder = func(p *ProtoValue) (interface{}, error) {
+var PackedRepeatedUint32Decoder packedRepeatedDecoder = func(p ProtoValue) (interface{}, error) {
 	result := []uint32{}
-	if p == nil {
-		return result, nil
-	}
+
 	payload := p.val.([]byte)
 	for len(payload) > 0 {
 		val, n := protowire.ConsumeVarint(payload)
@@ -65,11 +59,9 @@ var PackedRepeatedUint32Decoder packedRepeatedDecoder = func(p *ProtoValue) (int
 }
 
 // PackedRepeatedUint64Decoder 解码repeated uint64
-var PackedRepeatedUint64Decoder packedRepeatedDecoder = func(p *ProtoValue) (interface{}, error) {
+var PackedRepeatedUint64Decoder packedRepeatedDecoder = func(p ProtoValue) (interface{}, error) {
 	result := []uint64{}
-	if p == nil {
-		return result, nil
-	}
+
 	payload := p.val.([]byte)
 	for len(payload) > 0 {
 		val, n := protowire.ConsumeVarint(payload)
@@ -83,11 +75,9 @@ var PackedRepeatedUint64Decoder packedRepeatedDecoder = func(p *ProtoValue) (int
 }
 
 // PackedRepeatedSint32Decoder 解码repeated sint32
-var PackedRepeatedSint32Decoder packedRepeatedDecoder = func(p *ProtoValue) (interface{}, error) {
+var PackedRepeatedSint32Decoder packedRepeatedDecoder = func(p ProtoValue) (interface{}, error) {
 	result := []int32{}
-	if p == nil {
-		return result, nil
-	}
+
 	payload := p.val.([]byte)
 	for len(payload) > 0 {
 		val, n := protowire.ConsumeVarint(payload)
@@ -101,11 +91,9 @@ var PackedRepeatedSint32Decoder packedRepeatedDecoder = func(p *ProtoValue) (int
 }
 
 // PackedRepeatedSint64Decoder 解码repeated sint64
-var PackedRepeatedSint64Decoder packedRepeatedDecoder = func(p *ProtoValue) (interface{}, error) {
+var PackedRepeatedSint64Decoder packedRepeatedDecoder = func(p ProtoValue) (interface{}, error) {
 	result := []int64{}
-	if p == nil {
-		return result, nil
-	}
+
 	payload := p.val.([]byte)
 	for len(payload) > 0 {
 		val, n := protowire.ConsumeVarint(payload)
@@ -119,11 +107,9 @@ var PackedRepeatedSint64Decoder packedRepeatedDecoder = func(p *ProtoValue) (int
 }
 
 // PackedRepeatedBoolDecoder 解码repeated bool
-var PackedRepeatedBoolDecoder packedRepeatedDecoder = func(p *ProtoValue) (interface{}, error) {
+var PackedRepeatedBoolDecoder packedRepeatedDecoder = func(p ProtoValue) (interface{}, error) {
 	result := []bool{}
-	if p == nil {
-		return result, nil
-	}
+
 	payload := p.val.([]byte)
 	for len(payload) > 0 {
 		val, n := protowire.ConsumeVarint(payload)
@@ -137,16 +123,14 @@ var PackedRepeatedBoolDecoder packedRepeatedDecoder = func(p *ProtoValue) (inter
 }
 
 // PackedRepeatedEnumDecoder 解码repeated enum（本质是[]int32）
-var PackedRepeatedEnumDecoder packedRepeatedDecoder = func(p *ProtoValue) (interface{}, error) {
+var PackedRepeatedEnumDecoder packedRepeatedDecoder = func(p ProtoValue) (interface{}, error) {
 	return PackedRepeatedInt32Decoder(p)
 }
 
 // PackedRepeatedFixed64Decoder 解码repeated fixed64
-var PackedRepeatedFixed64Decoder packedRepeatedDecoder = func(p *ProtoValue) (interface{}, error) {
+var PackedRepeatedFixed64Decoder packedRepeatedDecoder = func(p ProtoValue) (interface{}, error) {
 	result := []uint64{}
-	if p == nil {
-		return result, nil
-	}
+
 	payload := p.val.([]byte)
 	for len(payload) > 0 {
 		val, n := protowire.ConsumeFixed64(payload)
@@ -160,11 +144,9 @@ var PackedRepeatedFixed64Decoder packedRepeatedDecoder = func(p *ProtoValue) (in
 }
 
 // PackedRepeatedSfixed64Decoder 解码repeated sfixed64
-var PackedRepeatedSfixed64Decoder packedRepeatedDecoder = func(p *ProtoValue) (interface{}, error) {
+var PackedRepeatedSfixed64Decoder packedRepeatedDecoder = func(p ProtoValue) (interface{}, error) {
 	result := []int64{}
-	if p == nil {
-		return result, nil
-	}
+
 	payload := p.val.([]byte)
 	for len(payload) > 0 {
 		val, n := protowire.ConsumeFixed64(payload)
@@ -178,11 +160,9 @@ var PackedRepeatedSfixed64Decoder packedRepeatedDecoder = func(p *ProtoValue) (i
 }
 
 // PackedRepeatedDoubleDecoder 解码repeated double
-var PackedRepeatedDoubleDecoder packedRepeatedDecoder = func(p *ProtoValue) (interface{}, error) {
+var PackedRepeatedDoubleDecoder packedRepeatedDecoder = func(p ProtoValue) (interface{}, error) {
 	result := []float64{}
-	if p == nil {
-		return result, nil
-	}
+
 	payload := p.val.([]byte)
 	for len(payload) > 0 {
 		val, n := protowire.ConsumeFixed64(payload)
@@ -196,11 +176,9 @@ var PackedRepeatedDoubleDecoder packedRepeatedDecoder = func(p *ProtoValue) (int
 }
 
 // PackedRepeatedFixed32Decoder 解码repeated fixed32
-var PackedRepeatedFixed32Decoder packedRepeatedDecoder = func(p *ProtoValue) (interface{}, error) {
+var PackedRepeatedFixed32Decoder packedRepeatedDecoder = func(p ProtoValue) (interface{}, error) {
 	result := []uint32{}
-	if p == nil {
-		return result, nil
-	}
+
 	payload := p.val.([]byte)
 	for len(payload) > 0 {
 		val, n := protowire.ConsumeFixed32(payload)
@@ -214,11 +192,9 @@ var PackedRepeatedFixed32Decoder packedRepeatedDecoder = func(p *ProtoValue) (in
 }
 
 // PackedRepeatedSfixed32Decoder 解码repeated sfixed32
-var PackedRepeatedSfixed32Decoder packedRepeatedDecoder = func(p *ProtoValue) (interface{}, error) {
+var PackedRepeatedSfixed32Decoder packedRepeatedDecoder = func(p ProtoValue) (interface{}, error) {
 	result := []int32{}
-	if p == nil {
-		return result, nil
-	}
+
 	payload := p.val.([]byte)
 	for len(payload) > 0 {
 		val, n := protowire.ConsumeFixed32(payload)
@@ -232,11 +208,9 @@ var PackedRepeatedSfixed32Decoder packedRepeatedDecoder = func(p *ProtoValue) (i
 }
 
 // PackedRepeatedFloatDecoder 解码repeated float
-var PackedRepeatedFloatDecoder packedRepeatedDecoder = func(p *ProtoValue) (interface{}, error) {
+var PackedRepeatedFloatDecoder packedRepeatedDecoder = func(p ProtoValue) (interface{}, error) {
 	result := []float32{}
-	if p == nil {
-		return result, nil
-	}
+
 	payload := p.val.([]byte)
 	for len(payload) > 0 {
 		val, n := protowire.ConsumeFixed32(payload)

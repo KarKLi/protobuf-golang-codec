@@ -1,5 +1,5 @@
 syntax="proto3";
-
+package karkli.protobuf_codec;
 option go_package="github.com/KarKLi/KarKLi/protobuf-golang-codec/internal/proto3_test";
 
 enum TestEnum {

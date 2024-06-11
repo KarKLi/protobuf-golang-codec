@@ -573,7 +573,7 @@ func TestDecodeUnpackedRepeatedData(t *testing.T) {
 	if err != nil {
 		t.Fatalf("can not parse tag 17, err: %+v", err)
 	}
-	realM17Arr := realM17.([]*ProtoMessage)
+	realM17Arr := realM17.([]ProtoMessage)
 	for i, msg := range testMsg.M_17 {
 		checkEmbeededMsgEqual(t, realM17Arr[i], msg)
 	}
@@ -609,7 +609,7 @@ func TestDecodeUnpackedRepeatedData(t *testing.T) {
 	if err != nil {
 		t.Fatalf("can not convert tag 20 proto map elems into reflect map, err: %+v", err)
 	}
-	realM20Map := realM20ReflectMap.Interface().(map[string]*ProtoMessage)
+	realM20Map := realM20ReflectMap.Interface().(map[string]ProtoMessage)
 	if len(realM20Map) != len(testMsg.M_20) {
 		t.Fatalf("parse result %v != real val %v", realM20Map, testMsg.M_20)
 	}
@@ -618,7 +618,7 @@ func TestDecodeUnpackedRepeatedData(t *testing.T) {
 	}
 }
 
-func checkEmbeededMsgEqual(t *testing.T, m1 *ProtoMessage, m2 *proto3_test.Embeeded) {
+func checkEmbeededMsgEqual(t *testing.T, m1 ProtoMessage, m2 *proto3_test.Embeeded) {
 	v1, err := m1.GetData(1)
 	if err != nil {
 		t.Fatalf("can not get tag=1's data, err: %+v", err)

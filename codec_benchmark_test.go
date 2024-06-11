@@ -6,6 +6,7 @@ import (
 
 	"github.com/KarKLi/protobuf-golang-codec/internal/proto3_test"
 	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/types/known/anypb"
 )
 
 var bin []byte
@@ -46,9 +47,12 @@ func initTestData(b *testing.B) {
 func BenchmarkBaseline(b *testing.B) {
 	initTestData(b)
 	for i := 0; i < b.N; i++ {
-		msg := &proto3_test.Msg{}
-		if err := proto.Unmarshal(bin, msg); err != nil {
-			b.Fatalf("can not unmarshal message, err: %+v", err)
+		anypbObj := &anypb.Any{
+			TypeUrl: "Msg",
+			Value:   bin,
+		}
+		if _, err := anypbObj.UnmarshalNew(); err != nil {
+			b.Fatalf("can not unmarshal test proto message, err: %+v", err)
 		}
 	}
 }
