@@ -72,18 +72,18 @@ goarch: amd64
 pkg: github.com/KarKLi/protobuf-golang-codec
 cpu: AMD EPYC 7K62 48-Core Processor
 BenchmarkNonRepeatedBaseline
-BenchmarkNonRepeatedBaseline-8          	 1499984	       799.0 ns/op	     304 B/op	       5 allocs/op
+BenchmarkNonRepeatedBaseline-8          	 1575591	       764.0 ns/op	     304 B/op	       5 allocs/op
 BenchmarkDecodeNonRepeatedData
-BenchmarkDecodeNonRepeatedData-8        	 1274136	       957.5 ns/op	    1696 B/op	      17 allocs/op
+BenchmarkDecodeNonRepeatedData-8        	 1717050	       697.6 ns/op	     672 B/op	      16 allocs/op
 BenchmarkPackedRepeatedBaseline
-BenchmarkPackedRepeatedBaseline-8       	  752754	      1487 ns/op	     677 B/op	      15 allocs/op
+BenchmarkPackedRepeatedBaseline-8       	  776210	      1464 ns/op	     677 B/op	      15 allocs/op
 BenchmarkDecodePackedRepeatedData
-BenchmarkDecodePackedRepeatedData-8     	  256388	      4605 ns/op	    2144 B/op	      76 allocs/op
+BenchmarkDecodePackedRepeatedData-8     	  272035	      4271 ns/op	    3264 B/op	      76 allocs/op
 BenchmarkUnpackedRepeatedBaseline
-BenchmarkUnpackedRepeatedBaseline-8     	  763533	      1499 ns/op	     677 B/op	      15 allocs/op
+BenchmarkUnpackedRepeatedBaseline-8     	  112032	     10739 ns/op	    3544 B/op	     106 allocs/op
 BenchmarkDecodeUnpackedRepeatedData
-BenchmarkDecodeUnpackedRepeatedData-8   	   16624	     72084 ns/op	   71776 B/op	     933 allocs/op
+BenchmarkDecodeUnpackedRepeatedData-8   	   20392	     58930 ns/op	  103393 B/op	     644 allocs/op
 PASS
-ok  	github.com/KarKLi/protobuf-golang-codec	9.644s
+ok  	github.com/KarKLi/protobuf-golang-codec	9.357s
 ```
 Benchmark code can be referenced at `codec_benchmark_test.go`.

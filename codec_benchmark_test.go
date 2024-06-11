@@ -236,7 +236,7 @@ func BenchmarkDecodePackedRepeatedData(b *testing.B) {
 func BenchmarkUnpackedRepeatedBaseline(b *testing.B) {
 	initTestData(b)
 	for i := 0; i < b.N; i++ {
-		if err := proto.Unmarshal(testPackedRepeatedBin, &proto3_test.RepeatedMsgWithPacked{}); err != nil {
+		if err := proto.Unmarshal(testUnpackedRepeatedBin, &proto3_test.RepeatedMsgWithUnpacked{}); err != nil {
 			b.Fatalf("can not unmarshal test proto message, err: %+v", err)
 		}
 	}
