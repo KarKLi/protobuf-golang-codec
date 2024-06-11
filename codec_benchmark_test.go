@@ -55,8 +55,9 @@ func BenchmarkBaseline(b *testing.B) {
 
 func BenchmarkDecodeNonRepeatedData(b *testing.B) {
 	initTestData(b)
+	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
-		m, err := Decode(bin)
+		m, err := Decode(bin, NotSort)
 		if err != nil {
 			b.Fatalf("decode test proto message into map failed, err: %+v", err)
 		}
