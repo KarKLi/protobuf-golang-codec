@@ -1,6 +1,8 @@
 # Protobuf wire format data decode library
 
-This library can decode protobuf wire format data without any .proto file, just:
+This library can decode protobuf wire format data without any .proto file.
+## Usage
+just:
 ```go
 import (
   "github.com/KarKLi/protobuf-golang-codec"
@@ -62,3 +64,18 @@ func main() {
 }
 ```
 For more usage and example, just check the `codec_test.go` for decode, parse and assert.
+
+## Benchmark
+```
+goos: linux
+goarch: amd64
+pkg: github.com/KarKLi/protobuf-golang-codec
+cpu: AMD EPYC 7K62 48-Core Processor
+BenchmarkBaseline
+BenchmarkBaseline-8                	 1498242	       797.5 ns/op	     304 B/op	       5 allocs/op
+BenchmarkDecodeNonRepeatedData
+BenchmarkDecodeNonRepeatedData-8   	 1280634	       941.0 ns/op	    1696 B/op	      17 allocs/op
+PASS
+ok  	github.com/KarKLi/protobuf-golang-codec	4.163s
+```
+Benchmark code can be referenced at `codec_benchmark_test.go`.
